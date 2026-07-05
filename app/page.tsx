@@ -290,15 +290,6 @@ await loadHistory(user.uid);
   💎 Plans
 </Link>
 
-<button
-  onClick={() => {
-    setActivePage("payments");
-    setMenuOpen(false);
-  }}
-  className="text-left"
->
-  💳 Payments
-</button>
 
 <Link
   href="/about"

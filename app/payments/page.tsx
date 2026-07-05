@@ -117,7 +117,7 @@ function PaymentsContent() {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-6">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-10">
       <h1 className="text-5xl font-bold mb-8">
         Payment
       </h1>
