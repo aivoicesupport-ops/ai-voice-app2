@@ -1,3 +1,5 @@
+import { voices } from "@/app/data/voices";
+
 export default function GeneratorCard({
   credits,
   text,
@@ -17,6 +19,22 @@ export default function GeneratorCard({
   generateAudio: () => void;
   audioUrl: string;
 }) {
+
+
+const selectedVoice = voices.find(
+  (item) => item.voiceId === voice
+);
+
+const playVoiceSample = () => {
+  if (!selectedVoice?.previewUrl) {
+    alert("Sample not available for this voice");
+    return;
+  }
+
+  const audio = new Audio(selectedVoice.previewUrl);
+  audio.play();
+};
+
   return (
     <div className="w-full max-w-3xl bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
    <select
@@ -24,11 +42,22 @@ export default function GeneratorCard({
   onChange={(e) => setVoice(e.target.value)}
   className="w-full mb-4 bg-black border border-zinc-700 rounded-2xl p-4 text-white"
 >
-  <option value="alloy">Alloy Voice</option>
-  <option value="echo">Echo Voice</option>
-  <option value="nova">Nova Voice</option>
-  <option value="shimmer">Shimmer Voice</option>
+{voices.map((item) => (
+  <option
+    key={item.voiceId}
+    value={item.voiceId}
+  >
+    {item.label}
+  </option>
+))}
 </select>
+
+<button
+  onClick={playVoiceSample}
+  className="w-full mb-4 bg-zinc-800 border border-zinc-700 py-3 rounded-2xl font-semibold text-white"
+>
+  ▶ Play Voice Sample
+</button>
 <textarea
   value={text}
   onChange={(e) => setText(e.target.value)}

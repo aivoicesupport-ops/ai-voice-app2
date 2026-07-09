@@ -6,7 +6,7 @@ import { auth, provider, db } from "@/lib/firebase";
 import HomeSection from "./components/HomeSection";
 import GeneratorCard from "./components/GeneratorCard";
 import Link from "next/link";
-
+import { voices } from "@/app/data/voices";
 
 import {
   signInWithPopup,
@@ -152,17 +152,24 @@ export default function Home() {
 
       setLoading(true);
 
-      const response = await fetch("/api/generate-audio", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-  text,
-  voice,
+      const selectedVoice = voices.find(
+  (item) => item.voiceId === voice
+);
+
+const response = await fetch("/api/generate-audio", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    text,
+  voice: selectedVoice?.voiceId,
+  voiceId: selectedVoice?.voiceId,
+  voiceName: selectedVoice?.label,
+  provider: selectedVoice?.provider,
   uid: user?.uid,
-}),
-      });
+  }),
+});
       if (!response.ok) {
   const errorData = await response.json();
 
